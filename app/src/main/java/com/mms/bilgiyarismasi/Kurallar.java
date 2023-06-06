@@ -27,7 +27,7 @@ public class Kurallar extends AppCompatActivity {
         binding.kurallarOyun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(),KategoriActivity.class);
                 startActivity(intent);
             }
         });
