@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,6 +30,8 @@ public class QuizQuestionsMuzik extends AppCompatActivity implements View.OnClic
     private ImageView ivImage;
     private TextView[] tvOptions;
     private Button btnSubmit;
+    private TextView timerTextView;
+    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,9 @@ public class QuizQuestionsMuzik extends AppCompatActivity implements View.OnClic
         mQuestionsList = Constants.getQuestionsList4();
 
         mUserName = getIntent().getStringExtra(Constants.getUserName());
+
+        timerTextView = findViewById(R.id.timerTextView);
+        startTimer();
 
         progressBar = findViewById(R.id.progressBar);
         progressBar.setMax(mQuestionsList.size());
@@ -56,6 +62,27 @@ public class QuizQuestionsMuzik extends AppCompatActivity implements View.OnClic
         btnSubmit.setOnClickListener(this);
 
         setCurrentQuestion();
+
+    }
+
+    private void startTimer() {
+        countDownTimer = new CountDownTimer(60000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                long seconds = millisUntilFinished / 1000;
+                timerTextView.setText("Kalan Süre: " + seconds + " sn");
+            }
+
+            public void onFinish() {
+                timerTextView.setText("Süre Doldu!");
+                redirectToResultActivity();
+            }
+        }.start();
+    }
+
+    private void redirectToResultActivity() {
+        Intent intent = new Intent(this, ResultActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void setCurrentQuestion() {
@@ -113,7 +140,9 @@ public class QuizQuestionsMuzik extends AppCompatActivity implements View.OnClic
                     mCurrentPosition++;
                     setCurrentQuestion();
                 } else {
+
                     Intent intent = new Intent(QuizQuestionsMuzik.this, ResultActivity.class);
+                    countDownTimer.cancel();
                     intent.putExtra(Constants.getUserName(), mUserName);
                     intent.putExtra(Constants.getCorrectAnswer(), mCorrectAnswers);
                     intent.putExtra(Constants.getTotalQuestions(), mQuestionsList.size());
@@ -136,6 +165,7 @@ public class QuizQuestionsMuzik extends AppCompatActivity implements View.OnClic
                 // resetting the option selected
                 mSelectedOptionPosition = -1;
             }
+
         }
     }
 }

@@ -2,6 +2,7 @@ package com.mms.bilgiyarismasi;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,12 @@ public class KategoriActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         benimAdapter adapter = new benimAdapter(this,mBaslik,mAciklama,mresim);
         listView.setAdapter(adapter);
+        int correctAnswers = getIntent().getIntExtra(Constants.getCorrectAnswer(), 0);
+
+
+
+
+
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

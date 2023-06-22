@@ -21,6 +21,10 @@ public class ResultActivity extends AppCompatActivity {
         tvName.setText(getIntent().getStringExtra(Constants.getUserName()));
         int correctAnswers = getIntent().getIntExtra(Constants.getCorrectAnswer(), 0);
         int totalQuestions = getIntent().getIntExtra(Constants.getTotalQuestions(), 0);
+
+
+
+
         tvScore.setText(+ totalQuestions + " sorudan " + correctAnswers + " tanesini doğru cevapladınız." );
         btnFinish.setOnClickListener(view -> {
             Intent intent = new Intent(ResultActivity.this, MainActivity.class);

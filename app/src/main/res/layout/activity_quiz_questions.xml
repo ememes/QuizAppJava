@@ -15,6 +15,15 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp">
+        <TextView
+            android:id="@+id/timerTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="16dp" />
 
         <TextView
             android:id="@+id/tv_question"

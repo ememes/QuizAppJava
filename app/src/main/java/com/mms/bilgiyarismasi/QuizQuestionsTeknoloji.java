@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,6 +31,9 @@ public class QuizQuestionsTeknoloji extends AppCompatActivity implements View.On
     private TextView[] tvOptions;
     private Button btnSubmit;
 
+    private TextView timerTextView;
+    private CountDownTimer countDownTimer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +41,9 @@ public class QuizQuestionsTeknoloji extends AppCompatActivity implements View.On
         mQuestionsList = Constants.getQuestionsList7();
 
         mUserName = getIntent().getStringExtra(Constants.getUserName());
+
+        timerTextView = findViewById(R.id.timerTextView);
+        startTimer();
 
         progressBar = findViewById(R.id.progressBar);
         progressBar.setMax(mQuestionsList.size());
@@ -56,6 +63,26 @@ public class QuizQuestionsTeknoloji extends AppCompatActivity implements View.On
         btnSubmit.setOnClickListener(this);
 
         setCurrentQuestion();
+    }
+
+    private void startTimer() {
+        countDownTimer = new CountDownTimer(60000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                long seconds = millisUntilFinished / 1000;
+                timerTextView.setText("Kalan Süre: " + seconds + " sn");
+            }
+
+            public void onFinish() {
+                timerTextView.setText("Süre Doldu!");
+                redirectToResultActivity();
+            }
+        }.start();
+    }
+
+    private void redirectToResultActivity() {
+        Intent intent = new Intent(this, ResultActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void setCurrentQuestion() {
@@ -114,6 +141,7 @@ public class QuizQuestionsTeknoloji extends AppCompatActivity implements View.On
                     setCurrentQuestion();
                 } else {
                     Intent intent = new Intent(QuizQuestionsTeknoloji.this, ResultActivity.class);
+                    countDownTimer.cancel();
                     intent.putExtra(Constants.getUserName(), mUserName);
                     intent.putExtra(Constants.getCorrectAnswer(), mCorrectAnswers);
                     intent.putExtra(Constants.getTotalQuestions(), mQuestionsList.size());
@@ -137,5 +165,6 @@ public class QuizQuestionsTeknoloji extends AppCompatActivity implements View.On
                 mSelectedOptionPosition = -1;
             }
         }
+
     }
 }

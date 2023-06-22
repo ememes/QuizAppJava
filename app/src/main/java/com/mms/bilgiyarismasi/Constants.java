@@ -98,7 +98,7 @@ public class Constants {
         questionList.add(new Question(
                 2,
                 "Bu müzik aletinin adı nedir?",
-                R.drawable.empty2,
+                R.drawable.keman,
                 new String[]{"Piyano", "Gitar", "Klarnet", "Keman"},
                 3)
         );

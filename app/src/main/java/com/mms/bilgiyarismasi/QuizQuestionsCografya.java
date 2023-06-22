@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,12 +30,19 @@ public class QuizQuestionsCografya extends AppCompatActivity implements View.OnC
     private ImageView ivImage;
     private TextView[] tvOptions;
     private Button btnSubmit;
+    private TextView timerTextView;
+    private CountDownTimer countDownTimer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_questions);
         mQuestionsList = Constants.getQuestionsList();
+
+        timerTextView = findViewById(R.id.timerTextView);
+        startTimer();
+
 
         mUserName = getIntent().getStringExtra(Constants.getUserName());
 
@@ -57,6 +65,27 @@ public class QuizQuestionsCografya extends AppCompatActivity implements View.OnC
 
         setCurrentQuestion();
     }
+
+    private void startTimer() {
+        countDownTimer = new CountDownTimer(60000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                long seconds = millisUntilFinished / 1000;
+                timerTextView.setText("Kalan Süre: " + seconds + " sn");
+            }
+
+            public void onFinish() {
+                timerTextView.setText("Süre Doldu!");
+                redirectToResultActivity();
+            }
+        }.start();
+    }
+
+    private void redirectToResultActivity() {
+        Intent intent = new Intent(this, ResultActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 
     private void setCurrentQuestion() {
         defaultOptionsView();
@@ -114,6 +143,7 @@ public class QuizQuestionsCografya extends AppCompatActivity implements View.OnC
                     setCurrentQuestion();
                 } else {
                     Intent intent = new Intent(QuizQuestionsCografya.this, ResultActivity.class);
+                    countDownTimer.cancel();
                     intent.putExtra(Constants.getUserName(), mUserName);
                     intent.putExtra(Constants.getCorrectAnswer(), mCorrectAnswers);
                     intent.putExtra(Constants.getTotalQuestions(), mQuestionsList.size());
@@ -137,5 +167,6 @@ public class QuizQuestionsCografya extends AppCompatActivity implements View.OnC
                 mSelectedOptionPosition = -1;
             }
         }
+
     }
 }
