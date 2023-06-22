@@ -21,7 +21,7 @@ public class QuizQuestionsActivity extends AppCompatActivity implements View.OnC
     private int mCurrentPosition = 0;
     private List<Question> mQuestionsList = null;
     private int mSelectedOptionPosition = -1;
-    private String mUserName = null;
+
     private int mCorrectAnswers = 0;
 
     private ProgressBar progressBar;
@@ -42,7 +42,7 @@ public class QuizQuestionsActivity extends AppCompatActivity implements View.OnC
         timerTextView = findViewById(R.id.timerTextView);
         startTimer();
 
-        mUserName = getIntent().getStringExtra(Constants.getUserName());
+
 
         progressBar = findViewById(R.id.progressBar);
         progressBar.setMax(mQuestionsList.size());
@@ -141,7 +141,7 @@ public class QuizQuestionsActivity extends AppCompatActivity implements View.OnC
                 } else {
                     Intent intent = new Intent(QuizQuestionsActivity.this, ResultActivity.class);
                     countDownTimer.cancel();
-                    intent.putExtra(Constants.getUserName(), mUserName);
+
                     intent.putExtra(Constants.getCorrectAnswer(), mCorrectAnswers);
                     intent.putExtra(Constants.getTotalQuestions(), mQuestionsList.size());
                     startActivity(intent);
@@ -165,5 +165,10 @@ public class QuizQuestionsActivity extends AppCompatActivity implements View.OnC
             }
 
         }
+
     }
+    public void onBackPressed() {
+        super.onBackPressed();
+        countDownTimer.cancel();
+        }
 }

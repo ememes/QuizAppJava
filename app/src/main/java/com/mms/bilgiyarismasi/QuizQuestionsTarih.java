@@ -168,4 +168,8 @@ public class QuizQuestionsTarih extends AppCompatActivity implements View.OnClic
         }
 
     }
+    public void onBackPressed() {
+        super.onBackPressed();
+        countDownTimer.cancel();
+    }
 }

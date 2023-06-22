@@ -167,4 +167,8 @@ public class QuizQuestionsTeknoloji extends AppCompatActivity implements View.On
         }
 
     }
+    public void onBackPressed() {
+        super.onBackPressed();
+        countDownTimer.cancel();
+    }
 }

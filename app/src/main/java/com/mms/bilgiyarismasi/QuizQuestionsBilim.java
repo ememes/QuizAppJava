@@ -21,7 +21,7 @@ public class QuizQuestionsBilim extends AppCompatActivity implements View.OnClic
     private int mCurrentPosition = 0;
     private List<Question> mQuestionsList = null;
     private int mSelectedOptionPosition = -1;
-    private String mUserName = null;
+
     private int mCorrectAnswers = 0;
 
     private ProgressBar progressBar;
@@ -39,7 +39,7 @@ public class QuizQuestionsBilim extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_quiz_questions);
         mQuestionsList = Constants.getQuestionsList5();
 
-        mUserName = getIntent().getStringExtra(Constants.getUserName());
+
 
         timerTextView = findViewById(R.id.timerTextView);
         startTimer();
@@ -141,7 +141,7 @@ public class QuizQuestionsBilim extends AppCompatActivity implements View.OnClic
                 } else {
                     Intent intent = new Intent(QuizQuestionsBilim.this, ResultActivity.class);
                     countDownTimer.cancel();
-                    intent.putExtra(Constants.getUserName(), mUserName);
+
                     intent.putExtra(Constants.getCorrectAnswer(), mCorrectAnswers);
                     intent.putExtra(Constants.getTotalQuestions(), mQuestionsList.size());
                     startActivity(intent);
@@ -167,5 +167,9 @@ public class QuizQuestionsBilim extends AppCompatActivity implements View.OnClic
             }
         }
 
+    }
+    public void onBackPressed() {
+        super.onBackPressed();
+        countDownTimer.cancel();
     }
 }

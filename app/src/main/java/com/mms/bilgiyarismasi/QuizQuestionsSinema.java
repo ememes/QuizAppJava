@@ -167,4 +167,8 @@ public class QuizQuestionsSinema extends AppCompatActivity implements View.OnCli
         }
 
     }
+    public void onBackPressed() {
+        super.onBackPressed();
+        countDownTimer.cancel();
+    }
 }

@@ -167,4 +167,8 @@ public class QuizQuestionsMath extends AppCompatActivity implements View.OnClick
         }
 
     }
+    public void onBackPressed() {
+        super.onBackPressed();
+        countDownTimer.cancel();
+    }
 }

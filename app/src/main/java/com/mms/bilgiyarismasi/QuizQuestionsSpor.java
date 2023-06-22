@@ -167,4 +167,8 @@ public class QuizQuestionsSpor extends AppCompatActivity implements View.OnClick
             }
         }
     }
+    public void onBackPressed() {
+        super.onBackPressed();
+        countDownTimer.cancel();
+    }
 }

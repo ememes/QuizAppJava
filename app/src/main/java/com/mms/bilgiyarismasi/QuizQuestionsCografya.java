@@ -169,4 +169,8 @@ public class QuizQuestionsCografya extends AppCompatActivity implements View.OnC
         }
 
     }
+    public void onBackPressed() {
+        super.onBackPressed();
+        countDownTimer.cancel();
+    }
 }
